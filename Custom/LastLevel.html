@@ -1,0 +1,141 @@
+<!DOCTYPE html>       
+<html>       
+<head>       
+<title> Last Level! </title>       
+<script src="https://simplycodingcourses.com/files/simplyjs/simply.js"></script>      
+<body>       
+<script>       
+        
+        
+        
+function start(){       
+        
+
+     sjs.open("target", 1200,600);       
+var background = new sjs.Image("Images/coco-bg.png");       
+background.setSize(sjs.getWidth(), sjs.getHeight());       
+
+
+var score = 0;  
+var score_txt = new sjs.Text("Score: 0", 21, "black"); 
+
+
+  
+var player = new sjs.Image("Images/tank.png");         
+player.type = "player";         
+player.setSize(100,50);         
+player.friction = .1;       
+player.accel = .5;     
+  
+var enemy1 = new sjs.Image("Images/enemy.png"); 
+enemy1.type = "enemy1";
+enemy1.setSize(100,50); 
+enemy1.moveTo(100,20); 
+  
+var enemy2 = new sjs.Image("Images/enemy.png"); 
+enemy2.type = "enemy2";
+enemy2.setSize(100,50); 
+enemy2.moveTo(250,20); 
+  
+
+  var enemy3 = new sjs.Image("Images/enemy.png"); 
+enemy3.type = "enemy3";
+enemy3.setSize(100,50); 
+enemy3.moveTo(100,20); 
+
+player.bottom();         
+        
+        
+        
+sjs.keyDown(D_KEY, function(){         
+player.pushRight();       
+});         
+        
+        
+        
+        
+sjs.keyDown(A_KEY, function(){         
+player.pushLeft();       
+});         
+        
+        
+        
+        var canShoot = true;
+ sjs.keyDown(UP_KEY, function(){           
+        if(canShoot == true){         
+          canShoot = false;       
+          var laser = new sjs.Image("Images/redlaser.png");       
+          laser.type = "laser";       
+          laser.setSize(150,70);       
+          laser.friction = 0;       
+          laser.noBounds = true;       
+          laser.moveTo(player.getX()-37,player.getY()-20);       
+          laser.pushUp(25.5);       
+        setTimeout(function(){       
+            canShoot = true;       
+          },1000);           
+        }     
+        });         
+                  
+        
+sjs.onHit("laser","enemy1",function(x,y){     
+  x.destroy();     
+  y.destroy();   
+  score = score + 1;
+  if(score >= 3){ 
+    window.location = "Win.html";       
+          score_txt.setText("Score: "+score);   
+          localStorage.setItem("score", score);      
+          }     
+});
+
+
+
+
+
+sjs.onHit("laser","enemy2",function(x,y){     
+  x.destroy();     
+  y.destroy();   
+  score = score + 1;     
+  if(score >= 3){  
+    window.location = "Win.html";       
+          score_txt.setText("Score: "+score);   
+          localStorage.setItem("score", score);     
+  }
+});
+
+  sjs.onHit("laser","enemy3",function(x,y){     
+  x.destroy();     
+  y.destroy();   
+  score = score + 1;
+  if(score >= 3){ 
+    window.location = "Win.html";       
+          score_txt.setText("Score: "+score);   
+          localStorage.setItem("score", score);      
+          }     
+});
+  
+ 
+   enemy1.friction = 0;
+   enemy1.pushRight(25.5)
+   enemy1.bounce()
+
+    enemy2.friction = 0;
+   enemy2.pushLeft(25.5)
+   enemy2.bounce()
+
+
+   enemy3.friction = 0;
+   enemy3.pushLeft(25.5)
+   enemy3.bounce()
+        
+        
+}//end start       
+</script>       
+</head>       
+<body onload="start()">       
+<h1> Last Level </h1>       
+        
+<div id="target" style="margin:auto;background:grey;"></div>       
+</body>       
+</html>
